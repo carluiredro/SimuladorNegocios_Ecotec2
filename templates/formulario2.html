@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Simulador ECOTEC - Paso 2</title></head>
+<body style="font-family: Arial, sans-serif; margin:0; padding:20px; background-color:#f4f6f9; display:flex; flex-direction:column; min-height:100vh; box-sizing:border-box;">
+    <div style="max-width:600px; width:100%; margin:0 auto;">
+        <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; background:white; padding:15px; border-radius:8px; box-shadow:0px 4px 6px rgba(0,0,0,0.05);">
+            <div>
+                <h1 style="color:#003366; margin:0; font-size:22px;">{{ empresa }}</h1>
+                <p style="margin:5px 0 0 0; font-size:13px; color:#555;">Fase 2: Perfil Interno Corporativo</p>
+            </div>
+            <img src="{{ url_for('static', filename='ecotec.png') }}" alt="Logo ECOTEC" style="height:50px;">
+        </div>
+
+        <form action="/simular" method="POST" style="background:white; padding:30px; border-radius:8px; box-shadow:0px 4px 10px rgba(0,0,0,0.1);">
+            <input type="hidden" name="nombre_empresa" value="{{ empresa }}">
+            <input type="hidden" name="pais_origen" value="{{ origen }}">
+            <input type="hidden" name="pais_destino" value="{{ destino }}">
+            <input type="hidden" name="estrategia" value="{{ estrategia }}">
+
+            <h3 style="color:#003366; margin-top:0; border-bottom:2px solid #003366; padding-bottom:10px;">Variables Internas (Daniels et al.)</h3>
+
+            <label style="display:block; margin-bottom:8px;"><strong>1. Cultura Organizacional Doméstica:</strong></label>
+            <select name="filosofia_cultural" required style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ccc; border-radius:4px;">
+                <option value="" disabled selected>-- Elija la orientación predominante --</option>
+                <option value="tradicional">Orientación Relacional Tradicional (Largo plazo, Armonía, Protocolo formal)</option>
+                <option value="transaccional">Orientación Transaccional Directa (Pragmática, Resultados e hitos contractuales rápidos)</option>
+                <option value="colectivista">Estructura Colectivista (Toma de decisiones grupal, Lealtad al equipo extendido)</option>
+                <option value="jerarquica">Estructura Alta Distancia de Poder (Jerarquías estrictas, Decisiones centralizadas)</option>
+                <option value="innovadora">Cultura de Baja Aversión al Riesgo (Espíritu emprendedor, Tolerancia a la incertidumbre)</option>
+            </select>
+
+            <label style="display:block; margin-bottom:8px;"><strong>2. Factor Político-Legal Crítico del Modelo:</strong></label>
+            <select name="prioridad_legal" required style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ccc; border-radius:4px;">
+                <option value="" disabled selected>-- Elija el pilar legal a defender --</option>
+                <option value="secretos_industriales">Protección de Fórmulas y Patentes Propias (Secretos de Producción)</option>
+                <option value="registro_marca">Protección de Signos Distintivos y Marca Comercial Exclusiva</option>
+                <option value="estandares_inocuidad">Cumplimiento Estricto de Homologación e Inocuidad (Regulaciones sanitarias FDA/UE)</option>
+                <option value="seguridad_juridica">Dependencia Total de Arbitraje Internacional ante Disputas Societarias</option>
+                <option value="licencias_gubernamentales">Dependencia de Concesiones y Permisos Especiales del Gobierno Destino</option>
+            </select>
+
+            <label style="display:block; margin-bottom:8px;"><strong>3. Ventaja Competitiva y Respaldo Económico:</strong></label>
+            <select name="respaldo_economico" required style="width:100%; padding:10px; margin-bottom:25px; border:1px solid #ccc; border-radius:4px;">
+                <option value="" disabled selected>-- Elija la ventaja financiera base --</option>
+                <option value="tratados_comerciales">Apalancamiento Neto en Aranceles de Preferencia por Acuerdos Comerciales (TLC)</option>
+                <option value="capital_propio">Financiamiento por Flujo de Capital Propio Reinvertido (Cero Deuda Externa)</option>
+                <option value="diferenciacion_premium">Margen Alto por Producto de Alta Gama / Nicho Inelástico Especializado</option>
+                <option value="economia_escala">Liderazgo en Costos Globales por Producción Masiva en Origen</option>
+                <option value="subsidios_incentivos">Uso de Incentivos Fiscales y Subsidios Gubernamentales a la Exportación</option>
+            </select>
+
+            <button type="submit" style="background-color:#003366; color:white; padding:12px 20px; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:16px; font-weight:bold;">
+                Procesar Reporte de Simulación Comercial Final →
+            </button>
+        </form>
+    </div>
+</body>
+</html>

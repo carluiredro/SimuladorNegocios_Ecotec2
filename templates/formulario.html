@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Simulador ECOTEC - Paso 1</title></head>
+<body style="font-family: Arial, sans-serif; margin:0; padding:20px; background-color:#f4f6f9; display:flex; flex-direction:column; min-height:100vh; justify-content:space-between; box-sizing:border-box;">
+    <div style="max-width:600px; width:100%; margin:0 auto; display:flex; flex-direction:column; align-items:center;">
+        <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; background:white; padding:15px; border-radius:8px; box-shadow:0px 4px 6px rgba(0,0,0,0.05);">
+            <div>
+                <h1 style="color:#003366; margin:0; font-size:24px;">Simulador ECOTEC</h1>
+                <p style="margin:5px 0 0 0; font-size:13px; color:#555;">Desarrollado por el Docente: Carlos Redroban Ortiz, Ph.D</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:#555;">Fase 1: Configuración de la Ruta de Internacionalización</p>
+            </div>
+            <img src="{{ url_for('static', filename='ecotec.png') }}" alt="Logo ECOTEC" style="height:60px; width:auto;">
+        </div>
+
+        <form action="/ir_a_filosofia" method="POST" style="background:white; padding:30px; border-radius:8px; width:100%; box-shadow:0px 4px 10px rgba(0,0,0,0.1); box-sizing:border-box;">
+            <label style="display:block; margin-bottom:8px;"><strong>1. Nombre de la empresa creada por el estudiante:</strong></label>
+            <input type="text" name="nombre_empresa" required oninput="this.value = this.value.toUpperCase();" style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box; text-transform:uppercase;">
+
+            <label style="display:block; margin-bottom:8px;"><strong>2. País de origen de la empresa:</strong></label>
+            <select name="pais_origen" required style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;">
+                <option value="" disabled selected>-- Seleccione origen --</option>
+                {% for pais in paises %} <option value="{{ pais }}">{{ pais }}</option> {% endfor %}
+            </select>
+
+            <label style="display:block; margin-bottom:8px;"><strong>3. País destino para la internacionalización:</strong></label>
+            <select name="pais_destino" required style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;">
+                <option value="" disabled selected>-- Seleccione destino --</option>
+                {% for pais in paises %} <option value="{{ pais }}">{{ pais }}</option> {% endfor %}
+            </select>
+
+            <label style="display:block; margin-bottom:8px;"><strong>4. Estrategia de colaboración internacional seleccionada:</strong></label>
+            <select name="estrategia" required style="width:100%; padding:10px; margin-bottom:25px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;">
+                <option value="" disabled selected>-- Seleccione una modalidad --</option>
+                <optgroup label="Sin Participación Accionaria (Contratos)">
+                    <option value="exportacion_directa">Exportación Directa</option>
+                    <option value="licencias">Licencias</option>
+                    <option value="franquicias">Franquicias</option>
+                    <option value="contratos_administracion">Contratos de Administración</option>
+                    <option value="operaciones_llave_mano">Operaciones Llave en Mano</option>
+                </optgroup>
+                <optgroup label="Con Participación Accionaria (Propiedad)">
+                    <option value="empresas_conjuntas">Empresas Conjuntas (Joint Ventures)</option>
+                    <option value="alianzas_participacion">Alianzas con Participación (Subsidiaria Propia)</option>
+                </optgroup>
+            </select>
+
+            <button type="submit" style="background-color:#003366; color:white; padding:12px 20px; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:16px; font-weight:bold;">
+                Continuar al Diagnóstico Organizacional →
+            </button>
+        </form>
+    </div>
+    <div style="text-align:center; margin-top:30px;"><img src="{{ url_for('static', filename='logo.gif') }}" style="max-height:50px;"></div>
+</body>
+</html>

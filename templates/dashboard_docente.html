@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Consola de Control Docente - ECOTEC</title></head>
+<body style="font-family: Arial, sans-serif; margin:0; padding:20px; background-color:#f4f6f9;">
+    <div style="max-width:1100px; margin:0 auto;">
+
+        <!-- Panel de Control Docente Superior -->
+        <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:25px; border-radius:8px; box-shadow:0px 4px 6px rgba(0,0,0,0.05); margin-bottom:20px; border-left:6px solid #003366;">
+            <div>
+                <h1 style="color:#003366; margin:0; font-size:26px;">Consola de Gobernanza Comercial (Docente)</h1>
+                <p style="margin:5px 0 0 0; color:#666;">Supervisión analítica multivariable y auditoría de redes del aula</p>
+            </div>
+
+            <!-- SELECTOR EXCLUSIVO DEL DOCENTE: Filtra el mapa global o por estudiante -->
+            <form action="/dashboard_docente" method="GET" style="display:flex; align-items:center; gap:10px; background:#f4f6f9; padding:10px; border-radius:6px; border:1px solid #ddd;">
+                <label style="font-size:13px; font-weight:bold; color:#333;">Vista del Mapa:</label>
+                <select name="empresa_auditar" onchange="this.form.submit()" style="padding:8px; border-radius:4px; border:1px solid #ccc; font-weight:bold; color:#003366;">
+                    <option value="GLOBAL" {% if empresa_actual == 'GLOBAL' %}selected{% endif %}>🌍 Ver Red Global Completa</option>
+                    <optgroup label="Auditar Estudiante Específico">
+                        {% for emp in lista_empresas %}
+                            <option value="{{ emp }}" {% if emp == empresa_actual %}selected{% endif %}>👤 {{ emp }}</option>
+                        {% endfor %}
+                    </optgroup>
+                </select>
+            </form>
+        </div>
+
+        <!-- Tarjetas Macro del Grupo -->
+        <div style="display:flex; gap:20px; margin-bottom:25px;">
+            <div style="background:white; padding:20px; border-radius:8px; flex:1; text-align:center; box-shadow:0px 4px 6px rgba(0,0,0,0.05); border-top:4px solid #003366;">
+                <h3 style="margin:0; color:#777; font-size:14px;">Total Canales Registrados</h3>
+                <p style="margin:10px 0 0 0; font-size:32px; font-weight:bold; color:#003366;">{{ total }}</p>
+            </div>
+            <div style="background:white; padding:20px; border-radius:8px; flex:1; text-align:center; box-shadow:0px 4px 6px rgba(0,0,0,0.05); border-top:4px solid #28a745;">
+                <h3 style="margin:0; color:#777; font-size:14px;">Rendimiento Teórico del Aula</h3>
+                <p style="margin:10px 0 0 0; font-size:32px; font-weight:bold; color:#28a745;">{{ promedio }}%</p>
+            </div>
+        </div>
+
+        <!-- Mapa de Red Dinámico Filtrable -->
+        <div style="background:white; padding:20px; border-radius:8px; box-shadow:0px 4px 6px rgba(0,0,0,0.05); margin-bottom:25px;">
+            <h3 style="margin-top:0; color:#003366;">{{ mapa_titulo }}</h3>
+            <div style="width:100%;">
+                {{ mapa_html|safe }}
+            </div>
+        </div>
+
+        <!-- Matriz de Auditoría de Operaciones del Aula Completa -->
+        <div style="background:white; padding:25px; border-radius:8px; box-shadow:0px 4px 10px rgba(0,0,0,0.1);">
+            <h3 style="color:#003366; margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px;">Bitácora de Decisiones Estratégicas (Ecosistema Global de Alumnos)</h3>
+            <table style="width:100%; border-collapse:collapse; text-align:left; margin-top:10px;">
+                <thead>
+                    <tr style="background:#f4f6f9; color:#333;">
+                        <th style="padding:12px;">Empresa Corporativa</th>
+                        <th style="padding:12px;">Corredor Comercial</th>
+                        <th style="padding:12px;">Modalidad de Entrada</th>
+                        <th style="padding:12px;">Ajuste del Caso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sim in simulaciones %}
+                    <tr style="border-bottom:1px solid #eee; {% if sim.empresa == empresa_actual %}background:#e3f2fd; font-weight:bold;{% endif %}">
+                        <td style="padding:12px; color:#003366;">{{ sim.empresa }}</td>
+                        <td style="padding:12px;">{{ sim.origen }} ➔ {{ sim.destino }}</td>
+                        <td style="padding:12px;"><span style="font-size:12px; background:#e9ecef; padding:4px 8px; border-radius:12px;">{{ sim.estrategia }}</span></td>
+                        <td style="padding:12px;">
+                            <span style="font-weight:bold; color:{% if sim.compatibilidad >= 80 %}#28a745{% elif sim.compatibilidad >= 55 %}#ffc107{% else %}#dc3545{% endif %};">
+                                {{ sim.compatibilidad }}%
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

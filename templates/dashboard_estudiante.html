@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Mi Dashboard de Expansión - ECOTEC</title></head>
+<body style="font-family: Arial, sans-serif; margin:0; padding:20px; background-color:#f4f6f9;">
+    <div style="max-width:1000px; margin:0 auto;">
+
+        <!-- Encabezado del Estudiante -->
+        <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:20px; border-radius:8px; box-shadow:0px 4px 6px rgba(0,0,0,0.05); margin-bottom:20px; border-left:6px solid #2575fc;">
+            <div>
+                <h1 style="color:#003366; margin:0; font-size:24px;">Dashboard de Internacionalización</h1>
+                <p style="margin:5px 0 0 0; color:#666;">Resultados analíticos de la organización: <strong style="color:#2575fc; font-size:16px;">{{ empresa }}</strong></p>
+            </div>
+            <img src="{{ url_for('static', filename='ecotec.png') }}" alt="Logo ECOTEC" style="height:50px;">
+        </div>
+
+        <!-- Mapa de su Propio Escenario Comercial -->
+        <div style="background:white; padding:20px; border-radius:8px; box-shadow:0px 4px 6px rgba(0,0,0,0.05); margin-bottom:25px;">
+            <h3 style="margin-top:0; color:#003366;">Esquema de Red Ego-Centrada (Tu Canal Internacional)</h3>
+            <p style="font-size:13px; color:#777; margin-top:-10px;">Visualización geográfica de los vectores de negociación establecidos para tu modelo de negocio.</p>
+            <div style="width:100%;">
+                {{ mapa_html|safe }}
+            </div>
+        </div>
+
+        <!-- 📊 REGRESA EL CUADRO DE ANÁLISIS DETALLADO PARA EL ESTUDIANTE -->
+        <div style="background:white; padding:25px; border-radius:8px; box-shadow:0px 4px 10px rgba(0,0,0,0.1); margin-bottom:25px;">
+            <h3 style="color:#003366; margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px;">Matriz de Negociación y Consistencia (Toma de Decisiones)</h3>
+            <p style="font-size:14px; color:#555;">A continuación se detallan los parámetros técnicos de tus negociaciones. Utiliza este instrumento para evaluar la viabilidad de tus alianzas estratégicas internacionales:</p>
+
+            <table style="width:100%; border-collapse:collapse; text-align:left; margin-top:15px;">
+                <thead>
+                    <tr style="background:#003366; color:white;">
+                        <th style="padding:12px;">Tu Empresa</th>
+                        <th style="padding:12px;">Corredor Comercial</th>
+                        <th style="padding:12px;">Modalidad Operativa Seleccionada</th>
+                        <th style="padding:12px;">Estructura Corporativa</th>
+                        <th style="padding:12px;">Índice de Compatibilidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for neg in mis_negociaciones %}
+                    <tr style="border-bottom:1px solid #eee; background:#fdfdfd;">
+                        <td style="padding:12px; font-weight:bold; color:#003366;">{{ neg.empresa }}</td>
+                        <td style="padding:12px; font-weight:bold;">{{ neg.origen }} ➔ {{ neg.destino }}</td>
+                        <td style="padding:12px;"><span style="font-size:12px; background:#e3f2fd; color:#003366; padding:5px 10px; border-radius:12px; font-weight:bold;">{{ neg.estrategia }}</span></td>
+                        <td style="padding:12px; color:#666; font-size:13px;">{{ neg.tipo_estrategia }}</td>
+                        <td style="padding:12px;">
+                            <span style="font-weight:bold; font-size:15px; color:{% if neg.compatibilidad >= 80 %}#28a745{% elif neg.compatibilidad >= 55 %}#ffc107{% else %}#dc3545{% endif %};">
+                                {{ neg.compatibilidad }}%
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botón de Navegación Retorno -->
+        <div style="background:white; padding:20px; border-radius:8px; box-shadow:0px 4px 6px rgba(0,0,0,0.05); text-align:center;">
+            <p style="margin:0; color:#555;">¿Deseas evaluar un escenario alternativo o ajustar las variables estratégicas de la negociación?</p>
+            <a href="/" style="display:inline-block; margin-top:15px; background-color:#6c757d; color:white; padding:10px 25px; text-decoration:none; border-radius:4px; font-weight:bold;">
+                ← Evaluar Otro Escenario
+            </a>
+        </div>
+
+    </div>
+</body>
+</html>
