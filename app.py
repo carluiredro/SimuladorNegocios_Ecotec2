@@ -28,15 +28,52 @@ ECOSISTEMA_SIMULACIONES = [
      "tipo_estrategia": "Con Participación Accionaria (Propiedad)"}
 ]
 
-# Diccionario Geográfico de Coordenadas para trazar los vectores comerciales en el mapa mundial
+# Diccionario Geográfico de Coordenadas COMPLETO (20 Países del Aula ECOTEC)
 COORDENADAS_PAISES = {
-    "Ecuador": {"lat": -1.8312, "lon": -78.1834},
-    "Estados Unidos": {"lat": 37.0902, "lon": -95.7129},
-    "China": {"lat": 35.8617, "lon": 104.1954},
-    "Alemania": {"lat": 51.1657, "lon": 10.4515},
-    "México": {"lat": 23.6345, "lon": -102.5528},
-    "España": {"lat": 40.4637, "lon": -3.7492},
-    "Japón": {"lat": 36.2048, "lon": 138.2529}
+    "Ecuador": {"lat": -1.8312, "lon": -78.1834, "arancel_base": 0.0, "flete_base": 0, "dias_transito": 0,
+                "riesgo": "Medio-Alto"},
+    "Luxemburgo": {"lat": 49.8153, "lon": 6.1296, "arancel_base": 0.12, "flete_base": 3200, "dias_transito": 22,
+                   "riesgo": "Bajo"},
+    "Marruecos": {"lat": 31.7917, "lon": -7.0926, "arancel_base": 0.15, "flete_base": 2900, "dias_transito": 19,
+                  "riesgo": "Medio"},
+    "México": {"lat": 23.6345, "lon": -102.5528, "arancel_base": 0.08, "flete_base": 1800, "dias_transito": 10,
+               "riesgo": "Medio"},
+    "Estados Unidos": {"lat": 37.0902, "lon": -95.7129, "arancel_base": 0.05, "flete_base": 1500, "dias_transito": 7,
+                       "riesgo": "Bajo"},
+    "Hungría": {"lat": 47.1625, "lon": 19.5033, "arancel_base": 0.12, "flete_base": 3400, "dias_transito": 25,
+                "riesgo": "Bajo"},
+    "Japón": {"lat": 36.2048, "lon": 138.2529, "arancel_base": 0.06, "flete_base": 3800, "dias_transito": 28,
+              "riesgo": "Bajo"},
+    "Mónaco": {"lat": 43.7384, "lon": 7.4246, "arancel_base": 0.12, "flete_base": 3500, "dias_transito": 21,
+               "riesgo": "Bajo"},
+    "Emiratos Árabes Unidos": {"lat": 23.4241, "lon": 53.8478, "arancel_base": 0.05, "flete_base": 4100,
+                               "dias_transito": 32, "riesgo": "Bajo"},
+    "China": {"lat": 35.8617, "lon": 104.1954, "arancel_base": 0.10, "flete_base": 3500, "dias_transito": 30,
+              "riesgo": "Medio"},
+    "Rusia": {"lat": 61.5240, "lon": 105.3188, "arancel_base": 0.18, "flete_base": 4500, "dias_transito": 35,
+              "riesgo": "Alto"},
+    "Nueva Zelanda": {"lat": -40.9006, "lon": 174.8860, "arancel_base": 0.05, "flete_base": 3900, "dias_transito": 26,
+                      "riesgo": "Bajo"},
+    "Suiza": {"lat": 46.8182, "lon": 8.2275, "arancel_base": 0.07, "flete_base": 3300, "dias_transito": 20,
+              "riesgo": "Bajo"},
+    "Australia": {"lat": -25.2744, "lon": 133.7751, "arancel_base": 0.05, "flete_base": 4000, "dias_transito": 27,
+                  "riesgo": "Bajo"},
+    "Colombia": {"lat": 4.5709, "lon": -74.2973, "arancel_base": 0.04, "flete_base": 1100, "dias_transito": 4,
+                 "riesgo": "Medio"},
+    "Peru": {"lat": -9.1900, "lon": -75.0152, "arancel_base": 0.04, "flete_base": 1000, "dias_transito": 3,
+             "riesgo": "Medio"},
+    "Argentina": {"lat": -38.4161, "lon": -63.6167, "arancel_base": 0.16, "flete_base": 2200, "dias_transito": 12,
+                  "riesgo": "Alto"},
+    "Venezuela": {"lat": 6.4238, "lon": -66.5897, "arancel_base": 0.20, "flete_base": 2500, "dias_transito": 14,
+                  "riesgo": "Alto"},
+    "Uruguay": {"lat": -32.5228, "lon": -55.7658, "arancel_base": 0.10, "flete_base": 2100, "dias_transito": 11,
+                "riesgo": "Bajo"},
+    "Brasil": {"lat": -14.2350, "lon": -51.9253, "arancel_base": 0.14, "flete_base": 2400, "dias_transito": 15,
+               "riesgo": "Medio-Alto"},
+    "Alemania": {"lat": 51.1657, "lon": 10.4515, "arancel_base": 0.12, "flete_base": 3300, "dias_transito": 21,
+                 "riesgo": "Bajo"},
+    "España": {"lat": 40.4637, "lon": -3.7492, "arancel_base": 0.12, "flete_base": 3100, "dias_transito": 20,
+               "riesgo": "Bajo"}
 }
 
 PAISES_MUNDIALES = sorted(list(COORDENADAS_PAISES.keys()))
@@ -147,10 +184,17 @@ def simular():
 
     detalles = ESTRATEGIAS_ECOTEC.get(estrategia_clave, {"nombre": "Desconocida", "tipo": "Contratos"})
 
-    # Lógica de cálculo simplificada para la simulación activa
+    # Lógica de cálculo parametrizada según el contexto cultural/legal y país seleccionado
     puntaje = 90
-    if filosofia_cultural == "transaccional" and pais_destino == "China": puntaje -= 30
-    if prioridad_legal == "secretos_industriales" and pais_destino == "Ecuador": puntaje -= 20
+    if filosofia_cultural == "transaccional" and countries_requiring_relation := ["China", "Japón",
+                                                                                  "Emiratos Árabes Unidos"]:
+        if pais_destino in countries_requiring_relation:
+            puntaje -= 30
+
+    if prioridad_legal == "secretos_industriales" and countries_low_ip_protection := ["Ecuador", "Venezuela",
+                                                                                      "Marruecos"]:
+        if pais_destino in countries_low_ip_protection:
+            puntaje -= 20
 
     res_texto = "Ajuste viable bajo el marco analítico." if puntaje >= 70 else "Fricción crítica detectada en el canal internacional."
 
@@ -187,8 +231,9 @@ def dashboard_estudiante():
     return render_template('dashboard_estudiante.html',
                            empresa=empresa_seleccionada,
                            perfil=perfil_empresa,
-                           mis_negociaciones=mis_negociaciones,  # <-- Enviamos su bitácora de datos a la vista
+                           mis_negociaciones=mis_negociaciones,
                            mapa_html=mapa_html)
+
 
 # 🎓 VISTA 2: Dashboard del Docente (Control Global y Desglose por Empresa)
 @app.route('/dashboard_docente')
@@ -209,7 +254,9 @@ def dashboard_docente():
         mapa_titulo = f"Auditoría de Red Individual: Empresa {filtro_empresa}"
 
     mapa_html = generar_mapa_red(simulaciones_mapeadas)
-    lista_empresas_dropdown = [item['empresa'] for item in ECOSISTEMA_SIMULACIONES]
+
+    # Extraer lista de empresas únicas de manera limpia para el dropdown
+    lista_empresas_dropdown = list(set(item['empresa'] for item in ECOSISTEMA_SIMULACIONES))
 
     return render_template('dashboard_docente.html',
                            simulaciones=ECOSISTEMA_SIMULACIONES,
