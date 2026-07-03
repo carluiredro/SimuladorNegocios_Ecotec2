@@ -186,15 +186,16 @@ def simular():
 
     # Lógica de cálculo parametrizada según el contexto cultural/legal y país seleccionado
     puntaje = 90
-    if filosofia_cultural == "transaccional" and countries_requiring_relation := ["China", "Japón",
-                                                                                  "Emiratos Árabes Unidos"]:
-        if pais_destino in countries_requiring_relation:
-            puntaje -= 30
 
-    if prioridad_legal == "secretos_industriales" and countries_low_ip_protection := ["Ecuador", "Venezuela",
-                                                                                      "Marruecos"]:
-        if pais_destino in countries_low_ip_protection:
-            puntaje -= 20
+    # Penalización Cultural
+    paises_relacion = ["China", "Japón", "Emiratos Árabes Unidos"]
+    if filosofia_cultural == "transaccional" and pais_destino in paises_relacion:
+        puntaje -= 30
+
+    # Penalización Legal
+    paises_baja_ip = ["Ecuador", "Venezuela", "Marruecos"]
+    if prioridad_legal == "secretos_industriales" and pais_destino in paises_baja_ip:
+        puntaje -= 20
 
     res_texto = "Ajuste viable bajo el marco analítico." if puntaje >= 70 else "Fricción crítica detectada en el canal internacional."
 
