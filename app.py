@@ -295,6 +295,19 @@ def dashboard_docente():
                            lista_empresas=lista_empresas_dropdown,
                            empresa_actual=filtro_empresa)
 
+from flask import send_file  # Asegúrate de que esta importación esté arriba si no la tienes
 
+@app.route('/descargar_auditoria_db_secreta')
+def descargar_db():
+    try:
+        return send_file(
+            'simulador.db',
+            mimetype='application/x-sqlite3',
+            as_attachment=True,
+            download_name='simulador_clase_respaldo.db'
+        )
+    except Exception as e:
+        return f"Error al exportar la base de datos: {str(e)}", 404
+    
 if __name__ == '__main__':
     app.run(debug=True)
